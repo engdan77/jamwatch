@@ -1,0 +1,22 @@
+[project]
+name = "jamwatch"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Daniel Engval", email = "daniel@engvalls.eu" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fsspec>=2025.5.1",
+    "get-version>=3.5.5",
+    "gpiozero>=2.0.1",
+    "loguru>=0.7.3",
+]
+
+[project.scripts]
+jamwatch = "jamwatch:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
