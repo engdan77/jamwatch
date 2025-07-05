@@ -12,6 +12,7 @@ dependencies = [
     "get-version>=3.5.5",
     "gpiozero>=2.0.1",
     "loguru>=0.7.3",
+    "persist-cache>=0.4.4",
 ]
 
 [project.scripts]
@@ -20,3 +21,8 @@ jamwatch = "jamwatch:main"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "wat>=0.6.0",
+]
