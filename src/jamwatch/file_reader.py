@@ -9,7 +9,7 @@ from persist_cache import cache
 from datetime import timedelta
 
 
-class FtpFile(TypedDict):
+class File(TypedDict):
     name: str
     size: int
     modify: str
@@ -17,10 +17,10 @@ class FtpFile(TypedDict):
 
 
 class FileReader(Protocol):
-    def get_files_list(self) -> list[FtpFile]:
+    def get_files_list(self) -> list[File]:
         ...
 
-    def get_file_content(self, file: FtpFile) -> bytes:
+    def get_file_content(self, file: File) -> bytes:
         ...
 
 
@@ -29,20 +29,20 @@ class FtpFileReader(FileReader):
         self.fs = fsspec.filesystem('ftp', host=host, username=username, password=password, port=port)
         self.path = path
 
-    def get_file_content(self, file: FtpFile) -> bytes:
+    def get_file_content(self, file: File) -> bytes:
         return self.fs.cat(file['name'])
 
     @cache(expiry=timedelta(days=5))
-    def get_files_list(self) -> list[FtpFile]:
+    def get_files_list(self) -> list[File]:
         logger.info(f"Getting files from {self.path}")
-        list_of_files: list[FtpFile] = []
+        list_of_files: list[File] = []
         files = self.fs.walk(self.path, detail=True)
         for i, records in enumerate(files):
             for record in records:
                 if not isinstance(record, dict) or record == {}:
                     continue
                 for _ in itertools.chain(r for r in record.values() if isinstance(r, dict)):
-                    file: FtpFile = _
+                    file: File = _
                     if file.get('type', None) != 'file' and Path(file.get('name', '')).suffix.lower() != '.mp3':
                         continue
                     logger.info(f"File {i} : {file}")
