@@ -17,7 +17,10 @@ class FtpFile(TypedDict):
 
 
 class FileReader(Protocol):
-    def get_files(self) -> list[FtpFile]:
+    def get_files_list(self) -> list[FtpFile]:
+        ...
+
+    def get_file_content(self, file: FtpFile) -> bytes:
         ...
 
 
@@ -25,10 +28,12 @@ class FtpFileReader(FileReader):
     def __init__(self, host: str, username: str, password: str, path: str, port: int = 21) -> None:
         self.fs = fsspec.filesystem('ftp', host=host, username=username, password=password, port=port)
         self.path = path
-        ...
+
+    def get_file_content(self, file: FtpFile) -> bytes:
+        return self.fs.cat(file['name'])
 
     @cache(expiry=timedelta(days=5))
-    def get_files(self) -> list[FtpFile]:
+    def get_files_list(self) -> list[FtpFile]:
         logger.info(f"Getting files from {self.path}")
         list_of_files: list[FtpFile] = []
         files = self.fs.walk(self.path, detail=True)
@@ -47,5 +52,5 @@ class FtpFileReader(FileReader):
 
 if __name__ == "__main__":
     ftp_reader = FtpFileReader(host=os.getenv('HOST'), username=os.getenv('USERNAME'), password=os.getenv('PASSWORD'), path=os.getenv('FTP_PATH'), port=int(os.getenv('PORT')))
-    files = ftp_reader.get_files()
+    files = ftp_reader.get_files_list()
     print(files)
