@@ -1,3 +1,4 @@
+import itertools
 import os
 from typing import Protocol
 from pathlib import Path
@@ -31,10 +32,16 @@ class FtpFileReader(FileReader):
         logger.info(f"Getting files from {self.path}")
         list_of_files: list[FtpFile] = []
         files = self.fs.walk(self.path, detail=True)
-        for i, f in enumerate(files):
-            logger.info(f"File {i} : {f}")
-            if isinstance(f, dict) and f.get('type') == 'file':
-                list_of_files.append(f)
+        for i, records in enumerate(files):
+            for record in records:
+                if not isinstance(record, dict) or record == {}:
+                    continue
+                for _ in itertools.chain(r for r in record.values() if isinstance(r, dict)):
+                    file: FtpFile = _
+                    if file.get('type', None) != 'file' and Path(file.get('name', '')).suffix.lower() != '.mp3':
+                        continue
+                    logger.info(f"File {i} : {file}")
+                    list_of_files.append(file)
         return list_of_files
 
 
