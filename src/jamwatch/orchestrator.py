@@ -1,4 +1,4 @@
-from jamwatch.param import Param
+from jamwatch.config import Param
 
 
 class Orchestrator:

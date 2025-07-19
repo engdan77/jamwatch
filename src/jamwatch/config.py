@@ -6,7 +6,7 @@ from jamwatch.mount import Mount
 
 
 @dataclass
-class Param:
+class Config:
     file_reader: FileReader
     file_writer: FileWriter
     mount: Mount
