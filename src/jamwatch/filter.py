@@ -1,5 +1,5 @@
 from jamwatch import log as logger
-from jamwatch.types import FilterDistributionStat, File
+from jamwatch.app_types import FilterDistributionStat, File
 
 
 def b2mb(bytes_: int) -> int:

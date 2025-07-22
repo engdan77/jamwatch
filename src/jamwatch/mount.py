@@ -1,7 +1,10 @@
 from typing import Protocol
+from . import log as logger
 
 
 class Mount(Protocol):
+    path: str
+
     def is_mounted(self) -> bool:
         ...
 
@@ -17,5 +20,6 @@ class LocalMount(Mount):
         return True
 
     def mount(self):
+        logger.info(f"Mounting {self.path} to local (mocked)")
         ...
 

@@ -1,20 +1,9 @@
-from dataclasses import dataclass
 from pathlib import Path
 
-from jamwatch.file_reader import FileReader
-from jamwatch.file_writer import FileWriter
-from jamwatch.mount import Mount
 from platformdirs import site_config_dir
 import json
 from . import log as logger
-from .types import FilterDistributionStat, Config
-
-
-@dataclass
-class OrchestratorParams:
-    file_reader: FileReader
-    file_writer: FileWriter
-    mount: Mount
+from .app_types import FilterDistributionStat, Config
 
 
 def load_config() -> Config:

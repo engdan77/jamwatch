@@ -1,7 +1,7 @@
 import eyed3
 import persist_cache
 
-from .types import File, Track
+from .app_types import File, Track
 
 
 @persist_cache.cache

@@ -2,6 +2,8 @@ from typing import Protocol
 
 
 class FileWriter(Protocol):
+    path: str
+
     def write_content(self, content: bytes, filename: str):
         ...
 
