@@ -1,4 +1,4 @@
-from jamwatch import log as logger
+from .log import logger
 from jamwatch.app_types import FilterDistributionStat, File
 
 

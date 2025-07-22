@@ -8,7 +8,7 @@ from jamwatch.error import MountError
 from jamwatch.file_reader import DiskFileReader, FileReader
 from jamwatch.file_writer import LocalFileWriter, FileWriter
 from jamwatch.mount import LocalMount, Mount
-import jamwatch.log as logger
+from jamwatch.log import logger
 
 
 @dataclass
@@ -53,14 +53,3 @@ class Orchestrator:
             max_mb=self.config.max_mb_size
         )
         ...
-
-
-if __name__ == "__main__":
-    orchestrator_config = OrchestratorParams(
-        file_reader=DiskFileReader('/Users/edo/tmp/mp3'),
-        file_writer=LocalFileWriter('/Users/edo/tmp/mp3_out'),
-        mount=LocalMount('/Users/edo/tmp/mp3_out')
-    )
-    orchestrator = Orchestrator(orchestrator_config)
-    orchestrator.copy()
-    ...

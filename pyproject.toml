@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.scripts]
-jamwatch = "jamwatch:main"
+jamwatch = "jamwatch.cli:main"
 
 [build-system]
 requires = ["hatchling"]

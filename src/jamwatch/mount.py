@@ -1,5 +1,5 @@
 from typing import Protocol
-from . import log as logger
+from .log import logger
 
 
 class Mount(Protocol):

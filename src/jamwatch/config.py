@@ -2,7 +2,7 @@ from pathlib import Path
 
 from platformdirs import site_config_dir
 import json
-from . import log as logger
+from .log import logger
 from .app_types import FilterDistributionStat, Config
 
 

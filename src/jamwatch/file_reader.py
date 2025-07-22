@@ -5,7 +5,7 @@ import fsspec
 
 from jamwatch.mp3 import get_track_details
 from jamwatch.app_types import File
-from . import log as logger
+from .log import logger
 
 
 class FileReader(ABC):
