@@ -30,7 +30,7 @@ class Config:
 def load_config() -> Config:
     config_file = Path(site_config_dir("jamwatch")) / "config.json"
     if not config_file.exists():
-        return Config(distribution_stats=[])
+        return Config(distribution_stats=[FilterDistributionStat(percentage=100, filter=">1900")])
     return Config(**json.loads(config_file.read_text()))
 
 
