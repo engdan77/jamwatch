@@ -1,3 +1,4 @@
+import musicplayer
 import importlib
 import get_version
 import warnings
