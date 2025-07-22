@@ -7,6 +7,10 @@ def info(message):
     loguru_logger.info(message)
 
 
+def warning(message):
+    loguru_logger.warning(message)
+
+
 def error(message):
     loguru_logger.error(message)
 

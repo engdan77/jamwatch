@@ -12,7 +12,7 @@ class FileReader(ABC):
     fs = None
     path = None
 
-    def get_files_list(self) -> list[File]:
+    def get_files_list(self, randomize:bool = True) -> list[File]:
         logger.info(f"Getting files from {self.path}")
         list_of_files: list[File] = []
         files = self.fs.walk(self.path, detail=True)
@@ -26,6 +26,9 @@ class FileReader(ABC):
                         continue
                     file['track'] = get_track_details(file)
                     list_of_files.append(file)
+        if randomize:
+            import random
+            random.shuffle(list_of_files)
         return list_of_files
 
     def get_file_content(self, file: File) -> bytes:
