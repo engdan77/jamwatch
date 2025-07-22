@@ -301,6 +301,7 @@ dependencies = [
     { name = "fsspec" },
     { name = "get-version" },
     { name = "gpiozero" },
+    { name = "jsons" },
     { name = "loguru" },
     { name = "musicplayer" },
     { name = "persist-cache" },
@@ -316,6 +317,7 @@ requires-dist = [
     { name = "fsspec", specifier = ">=2025.5.1" },
     { name = "get-version", specifier = ">=3.5.5" },
     { name = "gpiozero", specifier = ">=2.0.1" },
+    { name = "jsons", specifier = ">=1.6.3" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "musicplayer", git = "https://github.com/engdan77/musicplayer.git" },
     { name = "persist-cache", specifier = ">=0.4.4" },
@@ -323,6 +325,18 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [{ name = "wat", specifier = ">=0.6.0" }]
+
+[[package]]
+name = "jsons"
+version = "1.6.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typish" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ef/38/c1c4e06725568c21b2cdab96f95450caa257b73aac90f8041af18756f3bf/jsons-1.6.3.tar.gz", hash = "sha256:cd5815c7c6790ae11c70ad9978e0aa850d0d08a643a5105cc604eac8b29a30d7", size = 39884, upload-time = "2022-06-09T19:52:01.861Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9a/22/e18585ccbf9f8c42f8c26435df0e551a924aae33488227eb686876d0bffd/jsons-1.6.3-py3-none-any.whl", hash = "sha256:f07f8919316f72a3843c7ca6cc6c900513089f10092626934d1bfe4b5cf15401", size = 60701, upload-time = "2022-06-09T19:51:59.266Z" },
+]
 
 [[package]]
 name = "linkify-it-py"
@@ -689,6 +703,14 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/98/5a/da40306b885cc8c09109dc2e1abd358d5684b1425678151cdaed4731c822/typing_extensions-4.14.1.tar.gz", hash = "sha256:38b39f4aeeab64884ce9f74c94263ef78f3c22467c8724005483154c26648d36", size = 107673, upload-time = "2025-07-04T13:28:34.16Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b5/00/d631e67a838026495268c2f6884f3711a15a9a2a96cd244fdaea53b823fb/typing_extensions-4.14.1-py3-none-any.whl", hash = "sha256:d1e1e3b58374dc93031d6eda2420a48ea44a36c2b4766a4fdeb3710755731d76", size = 43906, upload-time = "2025-07-04T13:28:32.743Z" },
+]
+
+[[package]]
+name = "typish"
+version = "1.9.3"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9d/d6/3f56c9c0c12adf61dfcf4ed5c8ffd2c431db8dd85592067a57e8e1968565/typish-1.9.3-py3-none-any.whl", hash = "sha256:03cfee5e6eb856dbf90244e18f4e4c41044c8790d5779f4e775f63f982e2f896", size = 45063, upload-time = "2021-08-05T20:36:28.702Z" },
 ]
 
 [[package]]

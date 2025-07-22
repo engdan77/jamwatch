@@ -43,7 +43,7 @@ class Orchestrator:
         self.running = False
 
     def copy(self):
-        logger.info(f"Starting copy from {self.orchestrator_config.mount.path} to {self.orchestrator_config.file_writer.path}")
+        logger.info(f"Starting copy from {self.orchestrator_config.file_reader.path} to {self.orchestrator_config.file_writer.path}")
         mount = self.orchestrator_config.mount
         ensure_mount(mount)
         source_files = self.orchestrator_config.file_reader.get_files_list()
