@@ -1,20 +1,11 @@
 import itertools
-import os
-from typing import Protocol, NotRequired
-from abc import ABC, abstractmethod
+from abc import ABC
 from pathlib import Path
 import fsspec
-from typing import TypedDict
+
+from jamwatch.mp3 import get_track_details
+from jamwatch.types import File
 from . import log as logger
-from persist_cache import cache
-from datetime import timedelta
-
-
-class File(TypedDict):
-    name: str
-    size: int
-    modify: NotRequired[str]
-    type: NotRequired[str]
 
 
 class FileReader(ABC):
@@ -33,7 +24,7 @@ class FileReader(ABC):
                     file: File = _
                     if file.get('type', None) != 'file' and Path(file.get('name', '')).suffix.lower() != '.mp3':
                         continue
-                    logger.info(f"File {i} : {file}")
+                    file['track'] = get_track_details(file)
                     list_of_files.append(file)
         return list_of_files
 
