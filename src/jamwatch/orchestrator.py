@@ -1,8 +1,8 @@
-from jamwatch.config import Config
+from jamwatch.config import OrchestratorParams
 
 
 class Orchestrator:
-    def __init__(self, config: Config):
+    def __init__(self, config: OrchestratorParams):
         self.config = config
         self.running = False
 
