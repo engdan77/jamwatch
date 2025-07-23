@@ -1,5 +1,6 @@
 import time
 from dataclasses import dataclass
+from pathlib import Path
 
 from jamwatch.blink import Blink
 from jamwatch.config import load_config
@@ -49,13 +50,18 @@ class Orchestrator:
         mount = self.orchestrator_config.mount
         ensure_mount(mount)
         source_files = self.orchestrator_config.file_reader.get_files_list()
+        writer = self.orchestrator_config.file_writer
         filtered_files = filter_files(
             filter_distribution=self.config.distribution_stats,
             files_list=source_files,
             max_mb=self.config.max_mb_size
         )
+
+        self.orchestrator_config.file_writer.erase()
         for i, track in enumerate(filtered_files):
             current_perc = int((i / len(filtered_files)) * 100)
             self.orchestrator_config.progress_blinker.percentage(current_perc)
-            time.sleep(0.1)
+            source_file = Path(track['name'])
+            writer.write_content(content=source_file.read_bytes(), filename=source_file.name)
+            logger.info(f"Copied {source_file.name} to {writer.path}")
 
