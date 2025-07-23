@@ -33,7 +33,7 @@ def filter_files(filter_distribution: list[FilterDistributionStat], files_list: 
         logger.warning(f"Less than {max_mb} MB of files to filter so % may be inaccurate")
     for filter_stat in descending_filter_distribution:
         current_bytes_filled = 0
-        max_bytes = mb2b(int(max_mb * (filter_stat.percentage / 100)))
+        max_bytes = mb2b(int(max_mb * 0.9 * (filter_stat.percentage / 100)))  # Make it 90% to leave some margins
         for file in files_list:
             track = file['track']
             if track.contains(filter_stat.filter):

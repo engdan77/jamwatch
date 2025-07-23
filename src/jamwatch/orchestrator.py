@@ -1,6 +1,7 @@
 import time
 from dataclasses import dataclass
 
+from jamwatch.blink import Blink
 from jamwatch.config import load_config
 from jamwatch.filter import filter_files
 from jamwatch.app_types import Config
@@ -16,6 +17,7 @@ class OrchestratorParams:
     file_reader: FileReader
     file_writer: FileWriter
     mount: Mount
+    progress_blinker: Blink
 
 
 def ensure_mount(mount: Mount):
@@ -52,4 +54,8 @@ class Orchestrator:
             files_list=source_files,
             max_mb=self.config.max_mb_size
         )
-        ...
+        for i, track in enumerate(filtered_files):
+            current_perc = int((i / len(filtered_files)) * 100)
+            self.orchestrator_config.progress_blinker.percentage(current_perc)
+            time.sleep(0.1)
+

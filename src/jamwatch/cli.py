@@ -1,3 +1,4 @@
+from jamwatch.blink import Blink
 from jamwatch.file_reader import DiskFileReader
 from jamwatch.file_writer import LocalFileWriter
 from jamwatch.mount import LocalMount
@@ -14,7 +15,8 @@ def test():
     orchestrator_config = OrchestratorParams(
         file_reader=DiskFileReader('/Users/edo/tmp/mp3'),
         file_writer=LocalFileWriter('/Users/edo/tmp/mp3_out'),
-        mount=LocalMount('/Users/edo/tmp/mp3_out')
+        mount=LocalMount('/Users/edo/tmp/mp3_out'),
+        progress_blinker=Blink(gpio_pin=17)
     )
     orchestrator = Orchestrator(orchestrator_config)
     orchestrator.copy()
