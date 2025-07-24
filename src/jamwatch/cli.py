@@ -10,7 +10,7 @@ cyclopts_app = CycloptsApp()
 
 
 @cyclopts_app.default
-def test():
+def test_copy():
     logger.info("Starting Orchestrator")
     orchestrator_config = OrchestratorParams(
         file_reader=DiskFileReader('/Users/edo/tmp/mp3'),
