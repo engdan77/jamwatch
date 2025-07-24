@@ -23,3 +23,9 @@ class LocalMount(Mount):
         logger.info(f"Mounting {self.path} to local (mocked)")
         ...
 
+
+class JmtpfsMount(Mount):
+    def __init__(self, path: str) -> None:
+        self.path = path
+
+

@@ -23,6 +23,19 @@ def test():
     ...
 
 
+@cyclopts_app.command
+def copy():
+    logger.info("Starting Orchestrator")
+    orchestrator_config = OrchestratorParams(
+        file_reader=DiskFileReader('/Users/edo/tmp/mp3'),
+        file_writer=LocalFileWriter('/Users/edo/tmp/mp3_out'),
+        mount=LocalMount('/Users/edo/tmp/mp3_out'),
+        progress_blinker=Blink(gpio_pin=17)
+    )
+    orchestrator = Orchestrator(orchestrator_config)
+    orchestrator.copy()
+    ...
+
 def main():
     cyclopts_app()
 

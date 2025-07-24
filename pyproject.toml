@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "Daniel Engval", email = "daniel@engvalls.eu" }
 ]
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 dependencies = [
     "fsspec>=2025.5.1",
     "get-version>=3.5.5",
