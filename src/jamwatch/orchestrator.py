@@ -38,14 +38,23 @@ class Orchestrator:
         self.orchestrator_config: OrchestratorParams = orchestrator_config
         self.config: Config = load_config()
         self.running = False
+        self.copy_in_progress = False
 
-    def start(self):
+    def start_loop(self):
         self.running = True
 
-    def stop(self):
+    def stop_loop(self):
         self.running = False
 
+    def loop(self):
+        while self.running:
+            ...
+
     def copy(self):
+        if self.copy_in_progress:
+            logger.warning("Copy already in progress")
+            return
+        self.copy_in_progress = True
         logger.info(f"Starting copy from {self.orchestrator_config.file_reader.path} to {self.orchestrator_config.file_writer.path}")
         mount = self.orchestrator_config.mount
         ensure_mount(mount)
@@ -64,4 +73,5 @@ class Orchestrator:
             source_file = Path(track['name'])
             writer.write_content(content=source_file.read_bytes(), filename=source_file.name)
             logger.info(f"Copied {source_file.name} to {writer.path}")
+        self.copy_in_progress = False
 
