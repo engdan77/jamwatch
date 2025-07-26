@@ -30,6 +30,7 @@ def test_copy():
 
 @cyclopts_app.command
 def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))]):
+    """Copy files from a folder to a MTP device"""
     logger.info("Starting Orchestrator")
     orchestrator_config = OrchestratorParams(
         file_reader=DiskFileReader(source_folder.as_posix()),
@@ -48,7 +49,9 @@ def show_config_path():
     print(config.config_file)
 
 
+@cyclopts_app.command
 def create_config():
+    """Create a new config file"""
     current_config = config.load_config()
     config.save_config(current_config)
 

@@ -1,6 +1,7 @@
 [project]
 name = "jamwatch"
-version = "2025.7.1"
+dynamic = ["version"]
+# version = "2025.7.1"
 description = "Add your description here"
 readme = "README.md"
 authors = [
@@ -31,3 +32,6 @@ dev = [
 
 [tool.uv.sources]
 musicplayer = { git = "https://github.com/engdan77/musicplayer.git" }
+
+[tool.hatch.version]
+path = "src/jamwatch/__about__.py"

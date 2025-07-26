@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings("ignore")
 import musicplayer
 import importlib
 import get_version
