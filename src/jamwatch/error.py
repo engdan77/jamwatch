@@ -4,3 +4,7 @@ class AppError(Exception):
 
 class MountError(AppError):
     pass
+
+
+class FileWriteError(AppError):
+    pass
