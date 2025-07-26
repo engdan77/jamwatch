@@ -48,6 +48,11 @@ def show_config_path():
     print(config.config_file)
 
 
+def create_config():
+    current_config = config.load_config()
+    config.save_config(current_config)
+
+
 def main():
     cyclopts_app()
 

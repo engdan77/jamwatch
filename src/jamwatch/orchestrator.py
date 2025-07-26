@@ -60,6 +60,7 @@ class Orchestrator:
                 break
 
     def copy(self):
+        """Begins the copy process by reading files from the source and writing them to the destination."""
         if self.copy_in_progress:
             logger.warning("Copy already in progress")
             return
