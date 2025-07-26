@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from jamwatch.blink import Blink
+from jamwatch.button import Button
 from jamwatch.config import load_config
 from jamwatch.filter import filter_files
 from jamwatch.app_types import Config
@@ -19,6 +20,7 @@ class OrchestratorParams:
     file_writer: FileWriter
     mount: Mount
     progress_blinker: Blink
+    start_button: Button
 
 
 def ensure_mount(mount: Mount):
@@ -44,11 +46,18 @@ class Orchestrator:
         self.running = True
 
     def stop_loop(self):
+        logger.info("Stopping loop")
         self.running = False
 
     def loop(self):
+        logger.info("Starting loop")
+        self.orchestrator_config.start_button.add_pressed_func(self.copy)
         while self.running:
-            ...
+            try:
+                time.sleep(1)
+            except KeyboardInterrupt:
+                self.stop_loop()
+                break
 
     def copy(self):
         if self.copy_in_progress:

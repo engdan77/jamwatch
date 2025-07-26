@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Annotated
 
+from jamwatch import config
 from jamwatch.blink import Blink
 from jamwatch.file_reader import DiskFileReader
 from jamwatch.file_writer import LocalFileWriter, MtpFileWriter
@@ -39,6 +40,12 @@ def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exis
     orchestrator = Orchestrator(orchestrator_config)
     orchestrator.copy()
     logger.info('Copy completed')
+
+
+@cyclopts_app.command
+def show_config_path():
+    """Show the path to the config file"""
+    print(config.config_file)
 
 
 def main():
