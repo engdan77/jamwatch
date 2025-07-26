@@ -1,10 +1,14 @@
+from pathlib import Path
+from typing import Annotated
+
 from jamwatch.blink import Blink
 from jamwatch.file_reader import DiskFileReader
-from jamwatch.file_writer import LocalFileWriter
-from jamwatch.mount import LocalMount
+from jamwatch.file_writer import LocalFileWriter, MtpFileWriter
+from jamwatch.mount import LocalMount, MtpMount
 from jamwatch.orchestrator import OrchestratorParams, Orchestrator
 from jamwatch.log import logger
 from cyclopts import App as CycloptsApp
+from cyclopts import Parameter, validators
 
 cyclopts_app = CycloptsApp()
 
@@ -24,17 +28,18 @@ def test_copy():
 
 
 @cyclopts_app.command
-def copy():
+def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))]):
     logger.info("Starting Orchestrator")
     orchestrator_config = OrchestratorParams(
-        file_reader=DiskFileReader('/Users/edo/tmp/mp3'),
-        file_writer=LocalFileWriter('/Users/edo/tmp/mp3_out'),
-        mount=LocalMount('/Users/edo/tmp/mp3_out'),
+        file_reader=DiskFileReader(source_folder.as_posix()),
+        file_writer=MtpFileWriter(),
+        mount=MtpMount(),
         progress_blinker=Blink(gpio_pin=17)
     )
     orchestrator = Orchestrator(orchestrator_config)
     orchestrator.copy()
-    ...
+    logger.info('Copy completed')
+
 
 def main():
     cyclopts_app()

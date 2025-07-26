@@ -32,8 +32,8 @@ class LocalFileWriter(FileWriter):
 
 
 class MtpFileWriter(FileWriter):
-    def __init__(self, path: str) -> None:
-        self.path = path
+    def __init__(self) -> None:
+        ...
 
     def write_content(self, content: bytes, filename: str):
         with tempfile.NamedTemporaryFile(delete=True) as f:

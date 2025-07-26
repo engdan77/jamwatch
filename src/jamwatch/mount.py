@@ -20,9 +20,6 @@ class Mount(Protocol):
 
 
 class LocalMount(Mount):
-    def __init__(self, path: str) -> None:
-        self.path = path
-
     def is_mounted(self) -> bool:
         return True
 
@@ -35,9 +32,6 @@ class LocalMount(Mount):
 
 
 class MtpMount(Mount):
-    def __init__(self, path: str) -> None:
-        self.path = path
-
     def _detect_command(self) -> tuple[int, str]:
         """Run mtp-detect and return the command output"""
         _rc, _out = subprocess.getstatusoutput('mtp-detect')
