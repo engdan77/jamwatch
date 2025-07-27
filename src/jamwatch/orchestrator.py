@@ -25,7 +25,7 @@ class OrchestratorParams:
 def ensure_mount(mount: Mount):
     for _ in range(3):
         if not mount.is_mounted():
-            logger.info(f"Mounting {mount.path} to local attempt {_ + 1}")
+            logger.info(f"Mounting - attempt {_ + 1}")
             mount.mount()
         else:
             break
