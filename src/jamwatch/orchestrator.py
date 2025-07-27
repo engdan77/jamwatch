@@ -31,6 +31,8 @@ def ensure_mount(mount: Mount):
             break
         time.sleep(1)
     else:
+        message = f"Unable to mount {mount}"
+        logger.error(message)
         raise MountError(f'Unable to mount {mount}')
 
 
