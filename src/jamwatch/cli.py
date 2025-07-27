@@ -3,7 +3,7 @@ from typing import Annotated
 
 from jamwatch import config
 from jamwatch.blink import Blink
-from jamwatch.button import Button
+from jamwatch.button import Button, ButtonConfig
 from jamwatch.file_reader import DiskFileReader
 from jamwatch.file_writer import LocalFileWriter, MtpFileWriter
 from jamwatch.mount import LocalMount, MtpMount
@@ -32,7 +32,27 @@ def test_copy():
 @cyclopts_app.command
 def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))]):
     """Copy files from a folder to a MTP device"""
-    logger.info("Starting Orchestrator")
+    logger.info("Starting copying")
+    orchestrator = get_orchestrator_instance(source_folder)
+    orchestrator.copy()
+    logger.info('Copy completed')
+
+
+def start_server(source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))]):
+    """Start server that listens for button presses to start copying files"""
+    logger.info("Starting server")
+    orchestrator = get_orchestrator_instance(source_folder)
+    button_config = ButtonConfig(
+        gpio_pin=22,
+        hold_time=2,
+        pressed_func=orchestrator.copy
+    )
+    button = Button(button_config)
+    button.start_event_loop()
+    logger.info('Server stopped')
+
+
+def get_orchestrator_instance(source_folder):
     orchestrator_config = OrchestratorParams(
         file_reader=DiskFileReader(source_folder.as_posix()),
         file_writer=MtpFileWriter(),
@@ -40,8 +60,7 @@ def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exis
         progress_blinker=Blink(gpio_pin=17),
     )
     orchestrator = Orchestrator(orchestrator_config)
-    orchestrator.copy()
-    logger.info('Copy completed')
+    return orchestrator
 
 
 @cyclopts_app.command
