@@ -89,7 +89,7 @@ class Orchestrator:
             self.orchestrator_config.progress_blinker.percentage(current_perc)
             source_file = Path(track['name'])
             writer.write_content(content=source_file.read_bytes(), filename=source_file.name)
-            logger.info(f"Copied {source_file.name} to target [{i/tot_files:.2%}]")
+            logger.info(f"[{i/tot_files:.2%}] Copied {source_file.name} to target")
         free_space = mount.free_space()
         logger.info(f"Target available with {free_space:_.2f} MB free")
         self.copy_in_progress = False
