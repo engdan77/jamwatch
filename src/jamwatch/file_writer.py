@@ -38,12 +38,13 @@ class MtpFileWriter(FileWriter):
     def write_content(self, content: bytes, filename: str):
         with tempfile.NamedTemporaryFile(delete=True) as f:
             f.write(content)
-            _rc, out_new_file = subprocess.getstatusoutput(f'mtp-sendfile {f.name} {filename}')
+            cmd = f'mtp-sendfile {f.name} {filename}'
+            _rc, out_new_file = subprocess.getstatusoutput(cmd)
             _new_file_id = next((int(line.split(':').pop().strip()) for line in out_new_file.split('\n') if
                                  line.startswith('New file ID:')), None)
             send_file_success = bool(_rc == 0 and _new_file_id)
             if not send_file_success:
-                message = f'Error uploading file to MTP: {filename}'
+                message = f'Error uploading file to MTP: {filename} by the command: "{cmd}" ensure you have root authorities to target'
                 logger.error(message)
                 raise FileWriteError(message)
             logger.info(f'{filename} uploaded with id {_new_file_id}')
