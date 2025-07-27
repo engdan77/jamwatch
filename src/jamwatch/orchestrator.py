@@ -68,6 +68,8 @@ class Orchestrator:
         mount = self.orchestrator_config.mount
         logger.info(f"Ensuring target is available")
         ensure_mount(mount)
+        free_space = mount.free_space()
+        logger.info(f"Target available with {free_space:_.2f} MB free")
         logger.info(f"Retrieve list of files from {self.orchestrator_config.file_reader.path} and filter by percentage and size.")
         self.orchestrator_config.progress_blinker.percentage(90)
         source_files = self.orchestrator_config.file_reader.get_files_list(verbose=True)
@@ -88,6 +90,8 @@ class Orchestrator:
             source_file = Path(track['name'])
             writer.write_content(content=source_file.read_bytes(), filename=source_file.name)
             logger.info(f"Copied {source_file.name} to target [{i/tot_files:.2%}]")
+        free_space = mount.free_space()
+        logger.info(f"Target available with {free_space:_.2f} MB free")
         self.copy_in_progress = False
 
 
