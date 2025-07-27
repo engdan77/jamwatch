@@ -2,6 +2,7 @@ import itertools
 from abc import ABC
 from pathlib import Path
 import fsspec
+import msgspec
 
 from jamwatch.mp3 import get_track_details
 from jamwatch.app_types import File
@@ -27,9 +28,13 @@ class FileReader(ABC):
                     if file.get('type', None) != 'file' and Path(file.get('name', '')).suffix.lower() != '.mp3':
                         continue
                     if verbose:
-                        logger.info(f"Get track details from {file['name']} ({current_file_count})")
+                        logger.info(f"Get track details for {file['name']} ({current_file_count})")
                     current_file_count += 1
-                    file['track'] = get_track_details(file)
+                    try:
+                        file['track'] = get_track_details(file)
+                    except msgspec.DecodeError as e:
+                        logger.error(f"Error decoding file {file['name']}: {e}")
+                        continue
                     list_of_files.append(file)
         if randomize:
             import random
