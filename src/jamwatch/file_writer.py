@@ -44,6 +44,7 @@ class MtpFileWriter(FileWriter):
                                  line.startswith('New file ID:')), None)
             send_file_success = bool(_rc == 0 and _new_file_id)
             if not send_file_success:
+                print(out_new_file)
                 message = f'Error uploading file to MTP: {filename} by the command: "{cmd}" ensure you have root authorities to target'
                 logger.error(message)
                 raise FileWriteError(message)
