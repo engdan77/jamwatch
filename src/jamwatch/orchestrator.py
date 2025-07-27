@@ -69,7 +69,7 @@ class Orchestrator:
         logger.info(f"Ensuring target is available")
         ensure_mount(mount)
         logger.info(f"Retrieve list of files from {self.orchestrator_config.file_reader.path} and filter by percentage and size.")
-        source_files = self.orchestrator_config.file_reader.get_files_list()
+        source_files = self.orchestrator_config.file_reader.get_files_list(verbose=True)
         writer = self.orchestrator_config.file_writer
         logger.info(f'Start filtering files by percentage and size.')
         filtered_files = filter_files(
