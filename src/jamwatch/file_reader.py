@@ -16,12 +16,12 @@ class FileReader(ABC):
         logger.info(f"Getting files from {self.path}")
         list_of_files: list[File] = []
         files = self.fs.walk(self.path, detail=True)
-        tot_files = len(list(files))
-        logger.info(f"Found {tot_files} files in {self.path}")
         for i, records in enumerate(files):
-            if verbose:
-                logger.info(f"Processing {i+1} of {tot_files} files [{i/tot_files:.2%}]")
-            for record in records:
+            tot_files = len(list(records))
+            logger.info(f"Found {tot_files} files in {self.path}")
+            for j, record in enumerate(records):
+                if verbose:
+                    logger.info(f"Processing {j + 1} of {tot_files} files [{j / tot_files:.2%}]")
                 if not isinstance(record, dict) or record == {}:
                     continue
                 for _ in itertools.chain(r for r in record.values() if isinstance(r, dict)):
