@@ -36,7 +36,7 @@ class MtpFileWriter(FileWriter):
         ...
 
     def write_content(self, content: bytes, filename: str):
-        with tempfile.NamedTemporaryFile(delete=True) as f:
+        with tempfile.NamedTemporaryFile(delete=True, suffix='.mp3') as f:
             f.write(content)
             cmd = f'mtp-sendfile "{f.name}" "{filename}"'
             _rc, out_new_file = subprocess.getstatusoutput(cmd)
