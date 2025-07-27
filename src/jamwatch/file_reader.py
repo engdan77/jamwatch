@@ -16,18 +16,19 @@ class FileReader(ABC):
         logger.info(f"Getting files from {self.path}")
         list_of_files: list[File] = []
         files = self.fs.walk(self.path, detail=True)
-        for i, records in enumerate(files):
-            tot_files = len(list(records))
-            logger.info(f"Found {tot_files} files in {self.path}")
-            for j, record in enumerate(records):
-                if verbose:
-                    logger.info(f"Processing {j + 1} of {tot_files} files [{j / tot_files:.2%}]")
+        for records in files:
+            for record in records:
                 if not isinstance(record, dict) or record == {}:
                     continue
-                for _ in itertools.chain(r for r in record.values() if isinstance(r, dict)):
+                tot_files = len(list(records))
+                file_list = list(itertools.chain(r for r in record.values() if isinstance(r, dict)))
+                for i, _ in enumerate(file_list):
                     file: File = _
                     if file.get('type', None) != 'file' and Path(file.get('name', '')).suffix.lower() != '.mp3':
                         continue
+                    if verbose:
+                        logger.info(f"Processing file {file['name']} [{i/tot_files:.2%}]")
+                        logger.info(f"Found {tot_files} files in {self.path}")
                     file['track'] = get_track_details(file)
                     list_of_files.append(file)
         if randomize:
