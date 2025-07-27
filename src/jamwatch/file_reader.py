@@ -16,7 +16,7 @@ class FileReader(ABC):
         logger.info(f"Getting files from {self.path}")
         list_of_files: list[File] = []
         files = self.fs.walk(self.path, detail=True)
-        tot_files = len(files)
+        tot_files = len(list(files))
         for i, records in enumerate(files):
             if verbose:
                 logger.info(f"Processing {i+1} of {tot_files} files [{i/tot_files:.2%}]")

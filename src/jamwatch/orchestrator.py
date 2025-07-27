@@ -80,7 +80,7 @@ class Orchestrator:
         logger.info(f'Erasing target')
         self.orchestrator_config.file_writer.erase()
         logger.info(f'Copying {len(filtered_files)} files')
-        tot_files = len(filtered_files)
+        tot_files = len(list(filtered_files))
         for i, track in enumerate(filtered_files):
             current_perc = int((i / len(filtered_files)) * 100)
             self.orchestrator_config.progress_blinker.percentage(current_perc)
