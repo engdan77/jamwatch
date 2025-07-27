@@ -76,6 +76,14 @@ def create_config():
     config.save_config(current_config)
 
 
+@cyclopts_app.command
+def show_free_space():
+    """Show the free space in the target device"""
+    mtp = MtpMount()
+    free_space = mtp.free_space()
+    logger.info(f"Target available with {free_space:_.2f} MB free")
+
+
 def main():
     cyclopts_app()
 
