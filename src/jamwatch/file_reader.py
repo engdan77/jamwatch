@@ -28,7 +28,7 @@ class FileReader(ABC):
                     if file.get('type', None) != 'file' and Path(file.get('name', '')).suffix.lower() != '.mp3':
                         continue
                     if verbose:
-                        logger.info(f"Get track details for {file['name']} ({current_file_count})")
+                        logger.info(f"[{current_file_count}] Get track details for {file['name']}")
                     current_file_count += 1
                     try:
                         file['track'] = get_track_details(file)
