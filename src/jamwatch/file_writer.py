@@ -38,7 +38,7 @@ class MtpFileWriter(FileWriter):
     def write_content(self, content: bytes, filename: str):
         with tempfile.NamedTemporaryFile(delete=True) as f:
             f.write(content)
-            cmd = f'mtp-sendfile {f.name} {filename}'
+            cmd = f'mtp-sendfile "{f.name}" "{filename}"'
             _rc, out_new_file = subprocess.getstatusoutput(cmd)
             _new_file_id = next((int(line.split(':').pop().strip()) for line in out_new_file.split('\n') if
                                  line.startswith('New file ID:')), None)
