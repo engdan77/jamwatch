@@ -66,22 +66,27 @@ class Orchestrator:
         self.copy_in_progress = True
         logger.info(f"Starting copy from {self.orchestrator_config.file_reader.path}")
         mount = self.orchestrator_config.mount
+        logger.info(f"Ensuring target is available")
         ensure_mount(mount)
+        logger.info(f"Retrieve list of files from {self.orchestrator_config.file_reader.path} and filter by percentage and size.")
         source_files = self.orchestrator_config.file_reader.get_files_list()
         writer = self.orchestrator_config.file_writer
+        logger.info(f'Start filtering files by percentage and size.')
         filtered_files = filter_files(
             filter_distribution=self.config.distribution_stats,
             files_list=source_files,
             max_mb=self.config.max_mb_size
         )
-
+        logger.info(f'Erasing target')
         self.orchestrator_config.file_writer.erase()
+        logger.info(f'Copying {len(filtered_files)} files')
+        tot_files = len(filtered_files)
         for i, track in enumerate(filtered_files):
             current_perc = int((i / len(filtered_files)) * 100)
             self.orchestrator_config.progress_blinker.percentage(current_perc)
             source_file = Path(track['name'])
             writer.write_content(content=source_file.read_bytes(), filename=source_file.name)
-            logger.info(f"Copied {source_file.name} to {writer.path}")
+            logger.info(f"Copied {source_file.name} to {writer.path} [{i/tot_files:.2%}%]")
         self.copy_in_progress = False
 
 
