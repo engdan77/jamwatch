@@ -38,6 +38,7 @@ def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exis
     logger.info('Copy completed')
 
 
+@cyclopts_app.command
 def start_server(source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))]):
     """Start server that listens for button presses to start copying files"""
     logger.info("Starting server")
