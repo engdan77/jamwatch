@@ -12,12 +12,14 @@ if sys.platform == 'darwin':
 def round_to_quarter(percentage: int | float) -> int:
     match percentage:
         case x if 1 < x <= 25:
-            return 25
+            return 5
         case x if 25 < x <= 50:
-            return 50
+            return 25
         case x if 50 < x <= 75:
+            return 50
+        case x if 75 < x < 100:
             return 75
-        case x if 75 < x <= 100:
+        case 100:
             return 100
     return 0
 
