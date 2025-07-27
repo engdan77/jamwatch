@@ -31,7 +31,7 @@ def ensure_mount(mount: Mount):
             break
         time.sleep(1)
     else:
-        raise MountError(f'Unable to mount {mount.path}')
+        raise MountError(f'Unable to mount {mount}')
 
 
 class Orchestrator:
