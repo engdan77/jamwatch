@@ -3,6 +3,7 @@ from typing import Annotated
 
 from jamwatch import config
 from jamwatch.blink import Blink
+from jamwatch.button import Button
 from jamwatch.file_reader import DiskFileReader
 from jamwatch.file_writer import LocalFileWriter, MtpFileWriter
 from jamwatch.mount import LocalMount, MtpMount
@@ -36,7 +37,7 @@ def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exis
         file_reader=DiskFileReader(source_folder.as_posix()),
         file_writer=MtpFileWriter(),
         mount=MtpMount(),
-        progress_blinker=Blink(gpio_pin=17)
+        progress_blinker=Blink(gpio_pin=17),
     )
     orchestrator = Orchestrator(orchestrator_config)
     orchestrator.copy()
