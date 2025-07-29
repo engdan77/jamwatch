@@ -36,7 +36,7 @@ class Blink:
         self.state = BlinkState.OFF
         self.perc_blink = 0
 
-    def percentage(self, percentage: int | float, on_time_sec: int = 0.5, max_off_sec: int = 0.5):
+    def percentage(self, percentage: int | float, on_time_sec: int = 0.5, max_off_sec: int = 0.2):
         if self.state == BlinkState.BLINK and self.perc_blink == round_to_quarter(percentage):
             return
         self.perc_blink = round_to_quarter(percentage)
@@ -46,7 +46,7 @@ class Blink:
         if self.perc_blink > 99:
             self.led.on()
             return
-        off_time_secs = ((100 - self.perc_blink) / 100 * max_off_sec) / 1000
+        off_time_secs = ((100 - self.perc_blink) / 100 * max_off_sec)
         self.led.blink(on_time=on_time_sec, off_time=off_time_secs, background=True)
         self.state = BlinkState.BLINK
         logger.info(f"Blinking LED on for {on_time_sec}s and off {off_time_secs}s")
