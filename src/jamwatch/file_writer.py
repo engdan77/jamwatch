@@ -6,6 +6,7 @@ from typing import Protocol
 from jamwatch.error import FileWriteError
 from .log import logger
 import stamina
+import jamwatch
 
 
 class FileWriter(Protocol):
