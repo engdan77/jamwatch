@@ -3,6 +3,7 @@
 ## Requirements
 
 ```shell
+# mtp-tool - https://launchpad.net/ubuntu/jammy/+package/mtp-tools
 sudo apt-get install mtp-tools
 ```
 
