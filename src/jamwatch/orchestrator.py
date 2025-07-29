@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from jamwatch.blink import Blink
-from jamwatch.button import Button
 from jamwatch.config import load_config
 from jamwatch.filter import filter_files
 from jamwatch.app_types import Config

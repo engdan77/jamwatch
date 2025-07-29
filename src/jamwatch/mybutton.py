@@ -15,7 +15,7 @@ class ButtonConfig:
     pressed_func_kwargs: dict = field(default_factory=dict)
 
 
-class Button:
+class MyButton:
     def __init__(self, config: ButtonConfig):
         self.config = config
         self.event_loop_running = False
@@ -24,8 +24,7 @@ class Button:
         logger.info(
             f"Button initialized on pin {config.gpio_pin} with hold time {config.hold_time} seconds"
         )
-        gpiozero.Button.was_held = False
-
+        self.button.was_held = False
         self.button.when_held = self.held
         self.button.when_released = self.released
 

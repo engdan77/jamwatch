@@ -3,7 +3,7 @@ from typing import Annotated
 
 from jamwatch import config
 from jamwatch.blink import Blink
-from jamwatch.button import Button, ButtonConfig
+from jamwatch.mybutton import MyButton, ButtonConfig
 from jamwatch.file_reader import DiskFileReader
 from jamwatch.file_writer import LocalFileWriter, MtpFileWriter
 from jamwatch.mount import LocalMount, MtpMount, MountChecker
@@ -58,7 +58,7 @@ def start_server(source_folder: Annotated[Path, Parameter(validator=validators.P
         hold_time=2,
         pressed_func=orchestrator.copy
     )
-    button = Button(button_config)
+    button = MyButton(button_config)
     button.start_event_loop()
     logger.info('Server stopped')
 
