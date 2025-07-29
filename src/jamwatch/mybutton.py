@@ -5,6 +5,7 @@ import gpiozero
 from .log import logger
 from dataclasses import dataclass, field
 
+gpiozero.Button.was_held = False
 
 @dataclass
 class ButtonConfig:
@@ -24,7 +25,6 @@ class MyButton:
         logger.info(
             f"Button initialized on pin {config.gpio_pin} with hold time {config.hold_time} seconds"
         )
-        self.button.was_held = False
         self.button.when_held = self.held
         self.button.when_released = self.released
 
