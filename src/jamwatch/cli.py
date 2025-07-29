@@ -59,8 +59,10 @@ def start_server(source_folder: Annotated[Path, Parameter(validator=validators.P
         pressed_func=orchestrator.copy
     )
     button = MyButton(button_config)
-    button.start_event_loop()
-    logger.info('Server stopped')
+    try:
+        button.start_event_loop()
+    except KeyboardInterrupt:
+        logger.info('Server stopped')
 
 
 def get_orchestrator_instance(source_folder):
