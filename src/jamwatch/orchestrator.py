@@ -20,6 +20,7 @@ class OrchestratorParams:
     file_writer: FileWriter
     mount: Mount
     progress_blinker: Blink
+    mount_blinker: Blink = None
 
 
 def ensure_mount(mount: Mount):

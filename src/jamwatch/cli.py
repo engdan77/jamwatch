@@ -59,6 +59,7 @@ def get_orchestrator_instance(source_folder):
         file_writer=MtpFileWriter(),
         mount=MtpMount(),
         progress_blinker=Blink(gpio_pin=17),
+        mount_blinker=Blink(gpio_pin=27)
     )
     orchestrator = Orchestrator(orchestrator_config)
     return orchestrator
