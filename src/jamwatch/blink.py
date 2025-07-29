@@ -9,19 +9,13 @@ if sys.platform == 'darwin':
     os.environ['GPIOZERO_PIN_FACTORY'] = 'MOCK'
 
 
-def round_to_quarter(percentage: int | float) -> int:
-    match percentage:
-        case x if 1 < x <= 25:
-            return 5
-        case x if 25 < x <= 50:
-            return 25
-        case x if 50 < x <= 75:
-            return 50
-        case x if 75 < x < 100:
-            return 75
-        case 100:
-            return 100
-    return 0
+def round_percentage(percentage: int | float) -> int:
+    p = int(percentage / 10) * 10
+    if percentage > 0 and p < 10:
+        return 5
+    if percentage > 100:
+        return 100
+    return p
 
 
 class BlinkState(StrEnum):
@@ -37,9 +31,9 @@ class Blink:
         self.perc_blink = 0
 
     def percentage(self, percentage: int | float, on_time_sec: int = 0.5, max_off_sec: int = 0.2):
-        if self.state == BlinkState.BLINK and self.perc_blink == round_to_quarter(percentage):
+        if self.state == BlinkState.BLINK and self.perc_blink == round_percentage(percentage):
             return
-        self.perc_blink = round_to_quarter(percentage)
+        self.perc_blink = round_percentage(percentage)
         if self.perc_blink < 1:
             self.led.off()
             return

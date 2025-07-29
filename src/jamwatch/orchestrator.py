@@ -1,3 +1,4 @@
+import gc
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -52,6 +53,9 @@ class Orchestrator:
         self.orchestrator_config.progress_blinker.led = None
         self.orchestrator_config.mount_blinker.led = None
         self.running = False
+        gc.collect()
+        time.sleep(3)
+        logger.info("Orchestrator stopped")
 
     def loop(self):
         logger.info("Starting loop")
