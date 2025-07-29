@@ -1,5 +1,9 @@
 # JamWatch ⌚︎🎧
 
+## Background
+
+...
+
 ## Requirements
 
 ```shell
@@ -9,8 +13,11 @@ sudo apt-get install mtp-tools
 
 ## Usage
 ### Start as server waiting for button event (example)
+
+Ensure you have [UV](https://docs.astral.sh/uv/) installed available to root user - installation instructions [here](https://docs.astral.sh/uv/getting-started/installation/).
+
 ```shell
-sudo /home/user/.local/bin/uv run jamwatch start-server /home/user/mp3
+sudo uv run jamwatch start-server /home/user/mp3
 ```
 
 ## Software design
@@ -18,12 +25,6 @@ sudo /home/user/.local/bin/uv run jamwatch start-server /home/user/mp3
 ### Class diagram
 
 ```mermaid
----
-config:
-  look: handDrawn
-  theme: forest
----
-
 classDiagram
     class AppError {
         <<Exception>>
