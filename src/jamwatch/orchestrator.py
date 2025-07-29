@@ -100,6 +100,7 @@ class Orchestrator:
             logger.info(f"[{i/tot_files:.2%}] Copied {source_file.name} to target")
         free_space = mount.free_space()
         logger.info(f"Target available with {free_space:_.2f} MB free")
+        self.orchestrator_config.progress_blinker.off()
         self.copy_in_progress = False
 
 
