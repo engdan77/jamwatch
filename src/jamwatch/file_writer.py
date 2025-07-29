@@ -5,6 +5,7 @@ from typing import Protocol
 
 from jamwatch.error import FileWriteError
 from .log import logger
+import stamina
 
 
 class FileWriter(Protocol):
@@ -31,24 +32,29 @@ class LocalFileWriter(FileWriter):
             logger.info(f"Deleted {f.as_posix()}")
 
 
+@stamina.retry(on=FileWriteError, max_attempts=3)
+def _write_mtp(content, tempfile_obj, filename):
+    tempfile_obj.write(content)
+    cmd = f'mtp-sendfile "{tempfile_obj.name}" "{filename}"'
+    _rc, out_new_file = subprocess.getstatusoutput(cmd)
+    _new_file_id = next((int(line.split(':').pop().strip()) for line in out_new_file.split('\n') if
+                         line.startswith('New file ID:')), None)
+    send_file_success = bool(_rc == 0 and _new_file_id)
+    if not send_file_success:
+        print(out_new_file)
+        message = f'Error uploading file to MTP: {filename} by the command: "{cmd}" ensure you have root authorities to target'
+        logger.error(message)
+        raise FileWriteError(message)
+    logger.info(f'{filename} uploaded with id {_new_file_id}')
+
+
 class MtpFileWriter(FileWriter):
     def __init__(self) -> None:
         ...
 
     def write_content(self, content: bytes, filename: str):
         with tempfile.NamedTemporaryFile(delete=True, suffix='.mp3') as f:
-            f.write(content)
-            cmd = f'mtp-sendfile "{f.name}" "{filename}"'
-            _rc, out_new_file = subprocess.getstatusoutput(cmd)
-            _new_file_id = next((int(line.split(':').pop().strip()) for line in out_new_file.split('\n') if
-                                 line.startswith('New file ID:')), None)
-            send_file_success = bool(_rc == 0 and _new_file_id)
-            if not send_file_success:
-                print(out_new_file)
-                message = f'Error uploading file to MTP: {filename} by the command: "{cmd}" ensure you have root authorities to target'
-                logger.error(message)
-                raise FileWriteError(message)
-            logger.info(f'{filename} uploaded with id {_new_file_id}')
+            _write_mtp(content, f, filename)
 
     def erase(self):
         all_files = self._get_all_files()

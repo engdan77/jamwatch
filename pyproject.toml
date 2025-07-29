@@ -16,8 +16,9 @@ dependencies = [
     "musicplayer",
     "persist-cache>=0.4.4",
     "pigpio>=1.78",
-    "rpi-gpio>=0.7.1",
+    "rpi-gpio>=0.7.1 ; sys_platform == 'linux'",
     "rpi-lgpio>=0.6 ; sys_platform == 'linux'",
+    "stamina>=25.1.0",
 ]
 
 [project.scripts]
