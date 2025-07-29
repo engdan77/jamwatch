@@ -62,6 +62,9 @@ def start_server(source_folder: Annotated[Path, Parameter(validator=validators.P
     try:
         button.start_event_loop()
     except KeyboardInterrupt:
+        mount_blinker.close()
+        mount_checker.stop()
+        orchestrator.stop()
         logger.info('Server stopped')
 
 
