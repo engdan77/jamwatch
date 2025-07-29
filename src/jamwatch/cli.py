@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Annotated
 
-from jamwatch import config
+from jamwatch import config, __version__
 from jamwatch.blink import Blink
 from jamwatch.mybutton import MyButton, ButtonConfig
 from jamwatch.file_reader import DiskFileReader
@@ -32,7 +32,7 @@ def test_copy():
 @cyclopts_app.command
 def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))]):
     """Copy files from a folder to a MTP device"""
-    logger.info("Starting copying")
+    logger.info(f"Starting copying {__version__}")
     orchestrator = get_orchestrator_instance(source_folder)
     orchestrator.copy()
     orchestrator.stop()
@@ -42,7 +42,7 @@ def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exis
 @cyclopts_app.command
 def start_server(source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))]):
     """Start server that listens for button presses to start copying files"""
-    logger.info("Starting server")
+    logger.info(f"Starting server {__version__}")
     orchestrator = get_orchestrator_instance(source_folder)
     mount = orchestrator.orchestrator_config.mount
     mount_blinker = orchestrator.orchestrator_config.mount_blinker
