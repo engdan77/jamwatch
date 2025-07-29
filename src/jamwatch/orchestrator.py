@@ -78,7 +78,7 @@ class Orchestrator:
         free_space = mount.free_space()
         logger.info(f"Target available with {free_space:_.2f} MB free")
         logger.info(f"Retrieve list of files from {self.orchestrator_config.file_reader.path} and filter by percentage and size.")
-        self.orchestrator_config.progress_blinker.percentage(70)
+        self.orchestrator_config.progress_blinker.on()
         source_files = self.orchestrator_config.file_reader.get_files_list(verbose=True)
         writer = self.orchestrator_config.file_writer
         logger.info(f'Start filtering files by percentage and size.')
