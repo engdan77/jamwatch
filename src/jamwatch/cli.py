@@ -6,7 +6,7 @@ from jamwatch.blink import Blink
 from jamwatch.button import Button, ButtonConfig
 from jamwatch.file_reader import DiskFileReader
 from jamwatch.file_writer import LocalFileWriter, MtpFileWriter
-from jamwatch.mount import LocalMount, MtpMount
+from jamwatch.mount import LocalMount, MtpMount, MountChecker
 from jamwatch.orchestrator import OrchestratorParams, Orchestrator
 from jamwatch.log import logger
 from cyclopts import App as CycloptsApp
@@ -22,7 +22,7 @@ def test_copy():
         file_reader=DiskFileReader('/Users/edo/tmp/mp3'),
         file_writer=LocalFileWriter('/Users/edo/tmp/mp3_out'),
         mount=LocalMount('/Users/edo/tmp/mp3_out'),
-        progress_blinker=Blink(gpio_pin=17)
+        progress_blinker=Blink(gpio_pin=17),
     )
     orchestrator = Orchestrator(orchestrator_config)
     orchestrator.copy()
@@ -44,6 +44,15 @@ def start_server(source_folder: Annotated[Path, Parameter(validator=validators.P
     """Start server that listens for button presses to start copying files"""
     logger.info("Starting server")
     orchestrator = get_orchestrator_instance(source_folder)
+    mount = orchestrator.orchestrator_config.mount
+    mount_blinker = orchestrator.orchestrator_config.mount_blinker
+    mount_checker = MountChecker(
+        mount=mount,
+        blinker=mount_blinker,
+        sleep_secs=2
+    )
+    mount_checker.start()
+
     button_config = ButtonConfig(
         gpio_pin=22,
         hold_time=2,

@@ -53,9 +53,8 @@ class Orchestrator:
         self.orchestrator_config.progress_blinker.led = None
         self.orchestrator_config.mount_blinker.led = None
         self.running = False
+        # TODO: fix gpiozero/threading RuntimeError: cannot join current thread
         gc.collect()
-        time.sleep(3)
-        logger.info("Orchestrator stopped")
 
     def loop(self):
         logger.info("Starting loop")
@@ -80,7 +79,7 @@ class Orchestrator:
         free_space = mount.free_space()
         logger.info(f"Target available with {free_space:_.2f} MB free")
         logger.info(f"Retrieve list of files from {self.orchestrator_config.file_reader.path} and filter by percentage and size.")
-        self.orchestrator_config.progress_blinker.percentage(90)
+        self.orchestrator_config.progress_blinker.percentage(70)
         source_files = self.orchestrator_config.file_reader.get_files_list(verbose=True)
         writer = self.orchestrator_config.file_writer
         logger.info(f'Start filtering files by percentage and size.')
@@ -90,6 +89,7 @@ class Orchestrator:
             max_mb=self.config.max_mb_size
         )
         logger.info(f'Erasing target')
+        self.orchestrator_config.progress_blinker.percentage(90)
         self.orchestrator_config.file_writer.erase()
         logger.info(f'Copying {len(filtered_files)} files')
         tot_files = len(list(filtered_files))
