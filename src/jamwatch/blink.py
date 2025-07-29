@@ -60,3 +60,6 @@ class Blink:
         self.led.on()
         self.state = BlinkState.ON
         logger.info("Turning LED on")
+
+    def close(self):
+        self.led.close()

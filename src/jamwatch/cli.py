@@ -35,6 +35,7 @@ def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exis
     logger.info("Starting copying")
     orchestrator = get_orchestrator_instance(source_folder)
     orchestrator.copy()
+    orchestrator.stop()
     logger.info('Copy completed')
 
 

@@ -47,8 +47,10 @@ class Orchestrator:
     def start_loop(self):
         self.running = True
 
-    def stop_loop(self):
-        logger.info("Stopping loop")
+    def stop(self):
+        logger.info("Stopping orchestrator")
+        self.orchestrator_config.progress_blinker.led = None
+        self.orchestrator_config.mount_blinker.led = None
         self.running = False
 
     def loop(self):
@@ -58,7 +60,7 @@ class Orchestrator:
             try:
                 time.sleep(1)
             except KeyboardInterrupt:
-                self.stop_loop()
+                self.stop()
                 break
 
     def copy(self):
