@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 
 gpiozero.Button.was_held = False
 
+
 @dataclass
 class ButtonConfig:
     gpio_pin: int = 22
@@ -49,7 +50,9 @@ class MyButton:
 
     def pressed(self):
         logger.info("Button was PRESSED not held")
-        self.config.pressed_func(*self.config.pressed_func_args, **self.config.pressed_func_kwargs)
+        self.config.pressed_func(
+            *self.config.pressed_func_args, **self.config.pressed_func_kwargs
+        )
 
     def add_pressed_func(self, func: Callable, *args, **kwargs):
         self.config.pressed_func = func

@@ -6,7 +6,7 @@ from .app_types import File, Track
 
 @persist_cache.cache
 def get_track_details(file: File) -> Track:
-    return Track(eyed3.load(file['name']))
+    return Track(eyed3.load(file["name"]))
 
 
 def clear_mp3_cache():

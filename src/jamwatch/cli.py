@@ -16,48 +16,46 @@ from cyclopts import Parameter, validators
 cyclopts_app = CycloptsApp()
 
 
-@cyclopts_app.default
-def test_copy():
-    logger.info("Starting Orchestrator")
-    orchestrator_config = OrchestratorParams(
-        file_reader=DiskFileReader('/Users/edo/tmp/mp3'),
-        file_writer=LocalFileWriter('/Users/edo/tmp/mp3_out'),
-        mount=LocalMount('/Users/edo/tmp/mp3_out'),
-        progress_blinker=Blink(gpio_pin=17),
-    )
-    orchestrator = Orchestrator(orchestrator_config)
-    orchestrator.copy()
-    ...
+# @cyclopts_app
+# def test_copy():
+#     logger.info("Starting Orchestrator")
+#     orchestrator_config = OrchestratorParams(
+#         file_reader=DiskFileReader("/Users/edo/tmp/mp3"),
+#         file_writer=LocalFileWriter("/Users/edo/tmp/mp3_out"),
+#         mount=LocalMount("/Users/edo/tmp/mp3_out"),
+#         progress_blinker=Blink(gpio_pin=17),
+#     )
+#     orchestrator = Orchestrator(orchestrator_config)
+#     orchestrator.copy()
+#     ...
 
 
 @cyclopts_app.command
-def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))]):
+def copy(
+    source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))],
+):
     """Copy files from a folder to a MTP device"""
     logger.info(f"Starting copying {__version__}")
     orchestrator_instance = get_orchestrator_instance(source_folder)
     orchestrator_instance.copy()
     orchestrator_instance.stop()
-    logger.info('Copy completed')
+    logger.info("Copy completed")
 
 
 @cyclopts_app.command
-def start_server(source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))]):
+def start_server(
+    source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))],
+):
     """Start server that listens for button presses to start copying files"""
     logger.info(f"Starting server {__version__}")
     orchestrator_instance = get_orchestrator_instance(source_folder)
     mount = orchestrator_instance.orchestrator_config.mount
     mount_blinker = orchestrator_instance.orchestrator_config.mount_blinker
-    mount_checker = MountChecker(
-        mount=mount,
-        blinker=mount_blinker,
-        sleep_secs=2
-    )
+    mount_checker = MountChecker(mount=mount, blinker=mount_blinker, sleep_secs=2)
     mount_checker.start()
 
     button_config = ButtonConfig(
-        gpio_pin=22,
-        hold_time=2,
-        pressed_func=orchestrator_instance.copy
+        gpio_pin=22, hold_time=2, pressed_func=orchestrator_instance.copy
     )
     button = MyButton(button_config)
     try:
@@ -67,7 +65,7 @@ def start_server(source_folder: Annotated[Path, Parameter(validator=validators.P
         mount_checker.stop()
         mount_blinker.close()
         orchestrator_instance.stop()
-        logger.info('Server stopped')
+        logger.info("Server stopped")
 
 
 def get_orchestrator_instance(source_folder):
@@ -76,7 +74,7 @@ def get_orchestrator_instance(source_folder):
         file_writer=MtpFileWriter(),
         mount=MtpMount(),
         progress_blinker=Blink(gpio_pin=17),
-        mount_blinker=Blink(gpio_pin=27)
+        mount_blinker=Blink(gpio_pin=27),
     )
     orchestrator = Orchestrator(orchestrator_config)
     return orchestrator

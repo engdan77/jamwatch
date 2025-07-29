@@ -10,7 +10,11 @@ def mb2b(mb: int) -> int:
     return mb * 1024 * 1024
 
 
-def filter_files(filter_distribution: list[FilterDistributionStat], files_list: list[File], max_mb: int = 128) -> list[File]:
+def filter_files(
+    filter_distribution: list[FilterDistributionStat],
+    files_list: list[File],
+    max_mb: int = 128,
+) -> list[File]:
     """
     Filters a list of files based on the given filter distribution and limits the total file size.
     The function iterates over the provided filter distribution sorted by descending order of
@@ -26,20 +30,28 @@ def filter_files(filter_distribution: list[FilterDistributionStat], files_list: 
         and fall within the size constraints.
     """
     output: list[File] = []
-    descending_filter_distribution = sorted(filter_distribution, key=lambda x: x.percentage, reverse=True)
+    descending_filter_distribution = sorted(
+        filter_distribution, key=lambda x: x.percentage, reverse=True
+    )
     if sum(_.percentage for _ in descending_filter_distribution) > 100:
         logger.warning("Filter distribution percentage is greater than 100")
-    if sum(_['size'] for _ in files_list) < mb2b(max_mb):
-        logger.warning(f"Less than {max_mb} MB of files to filter so % may be inaccurate")
+    if sum(_["size"] for _ in files_list) < mb2b(max_mb):
+        logger.warning(
+            f"Less than {max_mb} MB of files to filter so % may be inaccurate"
+        )
     for filter_stat in descending_filter_distribution:
         current_bytes_filled = 0
-        max_bytes = mb2b(int(max_mb * 0.9 * (filter_stat.percentage / 100)))  # Make it 90% to leave some margins
+        max_bytes = mb2b(
+            int(max_mb * 0.9 * (filter_stat.percentage / 100))
+        )  # Make it 90% to leave some margins
         for file in files_list:
-            track = file['track']
+            track = file["track"]
             if track.contains(filter_stat.filter):
-                current_bytes_filled += file['size']
+                current_bytes_filled += file["size"]
                 output.append(file)
                 if current_bytes_filled > max_bytes:
-                    logger.info(f"Filled {b2mb(current_bytes_filled)} MB ({filter_stat.filter}) with {filter_stat.percentage}%")
+                    logger.info(
+                        f"Filled {b2mb(current_bytes_filled)} MB ({filter_stat.filter}) with {filter_stat.percentage}%"
+                    )
                     break
     return output

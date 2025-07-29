@@ -24,5 +24,3 @@ class Config:
     distribution_stats: list[FilterDistributionStat]
     config_file: Path = Path(site_config_dir("jamwatch")) / "config.json"
     max_mb_size: int = 128
-
-

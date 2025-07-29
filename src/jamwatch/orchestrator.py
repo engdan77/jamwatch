@@ -34,7 +34,7 @@ def ensure_mount(mount: Mount):
     else:
         message = f"Unable to mount {mount}"
         logger.error(message)
-        raise MountError(f'Unable to mount {mount}')
+        raise MountError(f"Unable to mount {mount}")
 
 
 class Orchestrator:
@@ -77,30 +77,32 @@ class Orchestrator:
         ensure_mount(mount)
         free_space = mount.free_space()
         logger.info(f"Target available with {free_space:_.2f} MB free")
-        logger.info(f"Retrieve list of files from {self.orchestrator_config.file_reader.path} and filter by percentage and size.")
+        logger.info(
+            f"Retrieve list of files from {self.orchestrator_config.file_reader.path} and filter by percentage and size."
+        )
         self.orchestrator_config.progress_blinker.on()
         source_files = self.orchestrator_config.file_reader.get_files_list(verbose=True)
         writer = self.orchestrator_config.file_writer
-        logger.info(f'Start filtering files by percentage and size.')
+        logger.info(f"Start filtering files by percentage and size.")
         filtered_files = filter_files(
             filter_distribution=self.config.distribution_stats,
             files_list=source_files,
-            max_mb=self.config.max_mb_size
+            max_mb=self.config.max_mb_size,
         )
-        logger.info(f'Erasing target')
+        logger.info(f"Erasing target")
         self.orchestrator_config.progress_blinker.percentage(90)
         self.orchestrator_config.file_writer.erase()
-        logger.info(f'Copying {len(filtered_files)} files')
+        logger.info(f"Copying {len(filtered_files)} files")
         tot_files = len(list(filtered_files))
         for i, track in enumerate(filtered_files):
             current_perc = int((i / len(filtered_files)) * 100)
             self.orchestrator_config.progress_blinker.percentage(current_perc)
-            source_file = Path(track['name'])
-            writer.write_content(content=source_file.read_bytes(), filename=source_file.name)
-            logger.info(f"[{i/tot_files:.2%}] Copied {source_file.name} to target")
+            source_file = Path(track["name"])
+            writer.write_content(
+                content=source_file.read_bytes(), filename=source_file.name
+            )
+            logger.info(f"[{i / tot_files:.2%}] Copied {source_file.name} to target")
         free_space = mount.free_space()
         logger.info(f"Target available with {free_space:_.2f} MB free")
         self.orchestrator_config.progress_blinker.off()
         self.copy_in_progress = False
-
-
