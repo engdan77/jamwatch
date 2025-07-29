@@ -33,7 +33,7 @@ class LocalFileWriter(FileWriter):
             logger.info(f"Deleted {f.as_posix()}")
 
 
-@stamina.retry(on=jamwatch.error.FileWriteError, max_attempts=3)
+@stamina.retry(on=jamwatch.error.FileWriteError)
 def _write_mtp(content, tempfile_obj, filename):
     tempfile_obj.write(content)
     cmd = f'mtp-sendfile "{tempfile_obj.name}" "{filename}"'
