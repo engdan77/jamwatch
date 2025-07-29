@@ -373,6 +373,7 @@ dependencies = [
     { name = "loguru" },
     { name = "musicplayer" },
     { name = "persist-cache" },
+    { name = "pigpio" },
 ]
 
 [package.dev-dependencies]
@@ -389,6 +390,7 @@ requires-dist = [
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "musicplayer", git = "https://github.com/engdan77/musicplayer.git" },
     { name = "persist-cache", specifier = ">=0.4.4" },
+    { name = "pigpio", specifier = ">=1.78" },
 ]
 
 [package.metadata.requires-dev]
@@ -660,6 +662,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ff/7f/f5addc50d1a4b50ea7684720f8ae92e99c8fa1ba66c2410e24e4dfa4efdd/persist_cache-0.4.4.tar.gz", hash = "sha256:8ea32ed9487f13b3fa6505ea529df251aae669efd6c3e3926fe51e607032a462", size = 9922, upload-time = "2025-05-03T04:08:13.325Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f2/d3/1bfdc2301a2a04feac440d5dee7c25e267b06164ff1a12caeb2aa2aa6cfc/persist_cache-0.4.4-py3-none-any.whl", hash = "sha256:5f47d3b464d267d88a8194254063744638b4bd3aad156b65dfc7a779893671b8", size = 12023, upload-time = "2025-05-03T04:08:11.881Z" },
+]
+
+[[package]]
+name = "pigpio"
+version = "1.78"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/a9/4a/3ebdfd90906553fb5420e80a475eb52f0809f2a29b547ba3b260db0cbc8f/pigpio-1.78.tar.gz", hash = "sha256:91efa50e4990649da97408a384782d6ccf58342fc59cdfe21ed7a42911569975", size = 40738, upload-time = "2020-09-29T23:55:12.61Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/82/a0/991ac7f96f83936c15f4b26b51d1fdba63e7bc9866411bfda022b649c2a7/pigpio-1.78-py2.py3-none-any.whl", hash = "sha256:81e46f640c4e6342881fa9bbe290dbcd4fc179619dc6591e57a9d4a084dc49fa", size = 39622, upload-time = "2020-09-29T23:55:11.013Z" },
 ]
 
 [[package]]
