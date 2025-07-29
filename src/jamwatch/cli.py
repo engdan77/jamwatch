@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Annotated
 
+import jamwatch.config
 from jamwatch import config, __version__
 from jamwatch.blink import Blink
 from jamwatch.mybutton import MyButton, ButtonConfig
@@ -33,9 +34,9 @@ def test_copy():
 def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))]):
     """Copy files from a folder to a MTP device"""
     logger.info(f"Starting copying {__version__}")
-    orchestrator = get_orchestrator_instance(source_folder)
-    orchestrator.copy()
-    orchestrator.stop()
+    orchestrator_instance = get_orchestrator_instance(source_folder)
+    orchestrator_instance.copy()
+    orchestrator_instance.stop()
     logger.info('Copy completed')
 
 
@@ -43,9 +44,9 @@ def copy(source_folder: Annotated[Path, Parameter(validator=validators.Path(exis
 def start_server(source_folder: Annotated[Path, Parameter(validator=validators.Path(exists=True))]):
     """Start server that listens for button presses to start copying files"""
     logger.info(f"Starting server {__version__}")
-    orchestrator = get_orchestrator_instance(source_folder)
-    mount = orchestrator.orchestrator_config.mount
-    mount_blinker = orchestrator.orchestrator_config.mount_blinker
+    orchestrator_instance = get_orchestrator_instance(source_folder)
+    mount = orchestrator_instance.orchestrator_config.mount
+    mount_blinker = orchestrator_instance.orchestrator_config.mount_blinker
     mount_checker = MountChecker(
         mount=mount,
         blinker=mount_blinker,
@@ -56,15 +57,16 @@ def start_server(source_folder: Annotated[Path, Parameter(validator=validators.P
     button_config = ButtonConfig(
         gpio_pin=22,
         hold_time=2,
-        pressed_func=orchestrator.copy
+        pressed_func=orchestrator_instance.copy
     )
     button = MyButton(button_config)
     try:
         button.start_event_loop()
     except KeyboardInterrupt:
-        mount_blinker.close()
+        jamwatch.config.STOPPED = True
         mount_checker.stop()
-        orchestrator.stop()
+        mount_blinker.close()
+        orchestrator_instance.stop()
         logger.info('Server stopped')
 
 

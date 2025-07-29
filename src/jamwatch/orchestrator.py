@@ -8,9 +8,9 @@ from jamwatch.config import load_config
 from jamwatch.filter import filter_files
 from jamwatch.app_types import Config
 from jamwatch.error import MountError
-from jamwatch.file_reader import DiskFileReader, FileReader
-from jamwatch.file_writer import LocalFileWriter, FileWriter
-from jamwatch.mount import LocalMount, Mount
+from jamwatch.file_reader import FileReader
+from jamwatch.file_writer import FileWriter
+from jamwatch.mount import Mount
 from jamwatch.log import logger
 
 

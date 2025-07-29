@@ -1,7 +1,7 @@
 import threading
 import time
 from typing import Protocol
-
+from jamwatch import config
 from .blink import Blink
 from .error import MountError
 from .log import logger
@@ -45,6 +45,8 @@ class MtpMount(Mount):
         return _rc, _out
 
     def is_mounted(self, detect_string: str = 'Garmin Forerunner') -> bool:
+        if config.STOPPED:
+            return False
         rc, out = self._detect_command()
         mtp_mounted = rc == 0 and detect_string in out
         return bool(mtp_mounted)

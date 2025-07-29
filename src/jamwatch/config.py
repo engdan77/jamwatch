@@ -1,10 +1,11 @@
 from pathlib import Path
 
 from platformdirs import user_config_path
-import json
 from .log import logger
 from .app_types import FilterDistributionStat, Config
 import jsons
+
+STOPPED = False  # For other threads to check
 
 config_file = Path(user_config_path("jamwatch")) / "config.json"
 config_file.parent.mkdir(parents=True, exist_ok=True)
@@ -22,3 +23,6 @@ def load_config() -> Config:
 def save_config(config: Config):
     logger.info(f"Saving config to {config_file}")
     config_file.write_text(jsons.dumps(config))
+
+
+
