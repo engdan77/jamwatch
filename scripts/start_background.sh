@@ -1,0 +1,2 @@
+# Example to be run from e.g. Cron/rc.local only start unless not running - customize to your needs
+/usr/bin/screen -ls | grep -i jamwatch || /usr/bin/screen -dmS jamwatch bash -c "cd /home/edo/apps/jamwatch && sudo /home/edo/.local/bin/uv run jamwatch start-server /home/edo/mp3"
