@@ -71,6 +71,16 @@ Now you can press the "button" to start the transfer, or you can also explicitly
 sudo uv run jamwatch copy /home/user/mp3
 ```
 
+### Button and LEDs
+
+- **Green LED** 🟢 - Indicates that a Garmin Forerunner being connected to USB
+- **Red LED** 🔴 - Has the following stages once transfer been started
+  - *Phase 1* (turned on) - Music meta data is being collected and transfer being prepared
+  - *Phase 2* (rapid blinking) - Current music on device being erased
+  - *Phase 3* (blinking from slow to fast) - To display progression 1% (slowly) - 100% (rapidly)
+  - *Off* - Transfer is complete
+- **Button** 🔘 - Click once to start transfer and red LED shall lid up if working correctly 
+
 
 
 ## Software design
