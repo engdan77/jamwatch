@@ -1,5 +1,7 @@
 # JamWatch ⌚︎🎧
 
+
+
 ## Background
 
 A while back I bought myself a [Garmin Forerunner 745](https://www.garmin.com/en-US/p/713363/) I've been very pleased with, one of the advantages being that it allow you to download [MP3](https://en.wikipedia.org/wiki/MP3) music and listen to it using bluetooth headset. However, this requires you to connect the watch to your computer using a <u>USB cable</u> and using the Garmin application chose which you wish to transfer.
@@ -7,6 +9,8 @@ A while back I bought myself a [Garmin Forerunner 745](https://www.garmin.com/en
 The problem I wish to solve is that from my catalog of *<u>music</u>* ♫ want "something" to make selection based on your own criteria - such as you may wish to have a *<u>random</u>* selection where **75%** of the songs are from *year 2020* and **25%** based on your own *rated* ⭐️⭐️⭐️ or higher songs automatically for you with you doing anything.
 
 As I had an older [Raspberry Pi 1B+](https://en.wikipedia.org/wiki/Raspberry_Pi) in my drawer, so with help of some coding, soldering and 3D printing made a small device where I could easily attach my watch and with a press a button 🔘 the process starts and thanks to the led(s) see the *<u>progress and completion</u>* 🟢.. Just to detach and go out for a jog with fresh new music based on your own choice 🏃‍♂️ ...
+
+
 
 ## Requirements and installation
 
@@ -18,7 +22,10 @@ sudo apt-get install liblgpio-dev  # for building lgpio
 git clone .....
 ```
 
+
+
 ## Usage
+
 ### Start as server waiting for button event (example)
 
 Ensure you have [UV](https://docs.astral.sh/uv/) installed available to root user - installation instructions [here](https://docs.astral.sh/uv/getting-started/installation/).
