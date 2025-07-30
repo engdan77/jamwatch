@@ -19,7 +19,7 @@ As I had an older [Raspberry Pi 1B+](https://en.wikipedia.org/wiki/Raspberry_Pi)
 sudo apt-get install mtp-tools  # required for transfers
 sudo apt-get install swig   # for building lgpio
 sudo apt-get install liblgpio-dev  # for building lgpio
-git clone .....
+git clone https://github.com/engdan77/jamwatch.git && cd jamwatch
 ```
 
 
