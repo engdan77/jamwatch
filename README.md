@@ -22,7 +22,11 @@ sudo apt-get install liblgpio-dev  # for building lgpio
 git clone https://github.com/engdan77/jamwatch.git && cd jamwatch
 ```
 
+## Hardware schema
 
+This is the basic wiring I've used for LEDs and button.
+
+<img src="https://raw.githubusercontent.com/engdan77/project_images/master/pics/wiring_schema.png" alt="wiring_schema" style="zoom:50%;" />
 
 ## Usage
 
