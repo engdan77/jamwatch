@@ -3,10 +3,10 @@ import tempfile
 from pathlib import Path
 from typing import Protocol
 
+import jamwatch
 from jamwatch.error import FileWriteError
 from .log import logger
 import stamina
-import jamwatch
 
 
 class FileWriter(Protocol):
@@ -33,6 +33,7 @@ class LocalFileWriter(FileWriter):
 
 @stamina.retry(on=jamwatch.error.FileWriteError)
 def _write_mtp(content, tempfile_obj, filename):
+    logger.debug(f"Writing {filename} to MTP as {tempfile_obj.name}...")
     tempfile_obj.write(content)
     cmd = f'mtp-sendfile "{tempfile_obj.name}" "{filename}"'
     _rc, out_new_file = subprocess.getstatusoutput(cmd)
@@ -46,9 +47,10 @@ def _write_mtp(content, tempfile_obj, filename):
     )
     send_file_success = bool(_rc == 0 and _new_file_id)
     if not send_file_success:
-        print(out_new_file)
         message = f'Error uploading file to MTP: {filename} by the command: "{cmd}" ensure you have root authorities to target'
         logger.error(message)
+        for line in out_new_file.split("\n"):
+            logger.debug(line)
         raise FileWriteError(message)
     logger.info(f"{filename} uploaded with id {_new_file_id}")
 
