@@ -10,6 +10,8 @@ The problem I wish to solve is that from my catalog of *<u>music</u>* ♫ want "
 
 As I had an older [Raspberry Pi 1B+](https://en.wikipedia.org/wiki/Raspberry_Pi) in my drawer, so with help of some coding, soldering and 3D printing made a small device where I could easily attach my watch and with a press a button 🔘 the process starts and thanks to the led(s) see the *<u>progress and completion</u>* 🟢.. Just to detach and go out for a jog with fresh new music based on your own choice 🏃‍♂️ ...
 
+<img src="https://raw.githubusercontent.com/engdan77/project_images/master/pics/jamwatch.gif" alt="jamwatch" style="zoom:150%;" />
+
 
 
 ## Requirements and installation
