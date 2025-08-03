@@ -77,6 +77,27 @@ Now you can press the "button" to start the transfer, or you can also explicitly
 sudo uv run jamwatch copy /home/user/mp3
 ```
 
+### Help
+
+```shell
+$ uv run jamwatch --help
+
+Usage: jamwatch COMMAND
+
+╭─ Commands ───────────────────────────────────────────────────────────────────╮
+│ copy              Copy files from a folder to a MTP device                   │
+│ create-config     Create a new config file                                   │
+│ show-config-path  Show the path to the config file                           │
+│ show-free-space   Show the free space in the target device                   │
+│ start-server      Start server that listens for button presses to start      │
+│                   copying files                                              │
+│ --help -h         Display this message and exit.                             │
+│ --version         Display application version.                               │
+╰──────────────────────────────────────────────────────────────────────────────╯
+```
+
+
+
 ### Button and LEDs
 
 - **Green LED** 🟢 - Indicates that a Garmin Forerunner being connected to USB
