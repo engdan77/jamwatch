@@ -32,7 +32,7 @@ class LocalFileWriter(FileWriter):
 
 
 @stamina.retry(on=jamwatch.error.FileWriteError)
-def _write_mtp(content, tempfile_obj, filename):
+def _write_mtp(content, tempfile_obj, filename, ignore_errors=True):
     logger.debug(f"Writing {filename} to MTP as {tempfile_obj.name}...")
     tempfile_obj.write(content)
     cmd = f'mtp-sendfile "{tempfile_obj.name}" "{filename}"'
@@ -51,7 +51,11 @@ def _write_mtp(content, tempfile_obj, filename):
         logger.error(message)
         for line in out_new_file.split("\n"):
             logger.debug(line)
-        raise FileWriteError(message)
+        if ignore_errors:
+            logger.warning("Ignoring error and continuing due to ignore_errors=True")
+            return
+        else:
+            raise FileWriteError(message)
     logger.info(f"{filename} uploaded with id {_new_file_id}")
 
 
